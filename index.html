@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #fileForm {
+            margin-bottom: 20px;
+        }
+        #fileList {
+            list-style: none;
+            padding: 0;
+        }
+        .fileItem {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>App Builder</h1>
+    <form id="fileForm">
+        <label for="fileName">File Name:</label>
+        <input type="text" id="fileName" required>
+        <br>
+        <label for="fileType">File Type:</label>
+        <select id="fileType">
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="js">JavaScript</option>
+        </select>
+        <br>
+        <label for="fileContent">Content:</label>
+        <textarea id="fileContent" rows="10" cols="30"></textarea>
+        <br>
+        <button type="submit">Create/Update File</button>
+    </form>
+    <h2>Files:</h2>
+    <ul id="fileList"></ul>
+
+    <script src="app.js"></script>
+</body>
+</html>
