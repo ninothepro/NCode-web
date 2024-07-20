@@ -8,14 +8,24 @@ document.getElementById('fileForm').addEventListener('submit', function(event) {
     const file = new Blob([fileContent], { type: getFileMimeType(fileType) });
     const fileUrl = URL.createObjectURL(file);
 
-    const link = document.createElement('a');
-    link.href = fileUrl;
-    link.download = fileName + '.' + fileType;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
     addFileToList(fileName, fileType, fileContent);
+    alert('File created/updated! Please download and commit the file manually.');
+
+    // You can add download functionality here if needed
+});
+
+document.getElementById('runButton').addEventListener('click', function() {
+    const files = getFilesFromList();
+    const htmlFile = files.find(file => file.type === 'html');
+    const iframe = document.getElementById('output');
+
+    if (htmlFile) {
+        const blob = new Blob([htmlFile.content], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        iframe.src = url;
+    } else {
+        alert('No HTML file found to run.');
+    }
 });
 
 function getFileMimeType(fileType) {
@@ -55,4 +65,18 @@ function addFileToList(fileName, fileType, fileContent) {
     fileItem.appendChild(viewButton);
     fileItem.appendChild(editButton);
     fileList.appendChild(fileItem);
+}
+
+function getFilesFromList() {
+    const fileList = document.getElementById('fileList').children;
+    const files = [];
+
+    for (let i = 0; i < fileList.length; i++) {
+        const fileItem = fileList[i];
+        const [name, type] = fileItem.textContent.split('.');
+        const content = fileItem.querySelector('button').nextSibling.onclick.toString().match(/alert\(([^)]+)\)/)[1].slice(1, -1);
+        files.push({ name, type, content });
+    }
+
+    return files;
 }
